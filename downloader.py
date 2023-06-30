@@ -1,9 +1,23 @@
 from colorama import *
-import mediafire_dl
+import requests
+import profile as profile
 import platform
 import os
 import time
 import sys
+
+def convertTuple(tup):
+		        # initialize an empty string
+		    str = ''
+		    for item in tup:
+		        str = str + item
+		    return str
+
+def request():
+    r = requests.get(url, stream=True)
+    with open(output, 'wb') as f:
+        for chunk in r.iter_content():
+            f.write(chunk)
 
 folderName = "xnsl649dwttbhc2"
 errorText = Fore.RED
@@ -43,20 +57,16 @@ if "-download" in sys.argv:
 	try:
 		fileToDownload = sys.argv[indexDownload + 1]
 		print(downloadText)
-		def convertTuple(tup):
-		        # initialize an empty string
-		    str = ''
-		    for item in tup:
-		        str = str + item
-		    return str
-		url = "https://www.mediafire.com/file/", folderName, "/", fileToDownload, ".py/file"
+		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
 		url = convertTuple(url)
-		tuple = "Scripts/", url[47:len(url) - 5]
+		tuple = "Scripts/", url[56:len(url)]
 		str = convertTuple(tuple)
+		print(len(url) - 13)
+		print()
 		print(str)
-		print("Downloading", url[47:len(url) - 5])
+		print("Downloading", url[56:len(url)])
 		output = str
-		mediafire_dl.download(url, output, quiet=False)
+		profile.run('request()')
 		pass
 	except:
 		print(errorText)
@@ -66,20 +76,33 @@ if "-update" in sys.argv:
 	try:
 		fileToDownload = "downloader"
 		print(downloadText)
-		def convertTuple(tup):
-		        # initialize an empty string
-		    str = ''
-		    for item in tup:
-		        str = str + item
-		    return str
-		url = "https://www.mediafire.com/file/", folderName, "/", fileToDownload, ".py/file"
+		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
 		url = convertTuple(url)
-		tuple = "", url[47:len(url) - 5]
+		tuple = "", url[56:len(url)]
 		str = convertTuple(tuple)
+		print(len(url) - 13)
 		print(str)
-		print("Updating", url[47:len(url) - 5])
+		print("Updating", url[56:len(url) - 5])
 		output = str
-		mediafire_dl.download(url, output, quiet=False)
+		profile.run('request()')
+		pass
+	except:
+		print(errorText)
+		print("An error occured")
+if "-testupdate" in sys.argv:
+	print("Update")
+	try:
+		fileToDownload = "downloader"
+		print(downloadText)
+		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
+		url = convertTuple(url)
+		tuple = "try_", url[56:len(url)]
+		str = convertTuple(tuple)
+		print(len(url) - 13)
+		print(str)
+		print("Updating", url[56:len(url) - 5])
+		output = str
+		profile.run('request()')
 		pass
 	except:
 		print(errorText)
