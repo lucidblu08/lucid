@@ -96,7 +96,7 @@ if "-testupdate" in sys.argv:
 		print(downloadText)
 		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
 		url = convertTuple(url)
-		tuple = "try_", url[56:len(url)]
+		tuple = "test_", url[56:len(url)]
 		str = convertTuple(tuple)
 		print(len(url) - 13)
 		print(str)
@@ -107,3 +107,6 @@ if "-testupdate" in sys.argv:
 	except:
 		print(errorText)
 		print("An error occured")
+if "-help" in sys.argv:
+	print(downloadText)
+	print("Help:\n-download {file name}\n-help\n-update\n\nExample:\npython3 downloader.py -download passwordmaster -update -help")
