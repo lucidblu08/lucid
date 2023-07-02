@@ -1,4 +1,5 @@
 try:
+	import glob
 	import aiohttp
 	from colorama import *
 	import requests
@@ -111,7 +112,7 @@ try:
 			print("An error occured")
 	if "-help" in sys.argv:
 		print(downloadText)
-		print("Help:\n-download {file name}\n-help\n-update\n-run\n\nExample:\npython3 main.py -download password -update -help -run password\n\nFiles:\npassword - password mananger with a gui")
+		print("Help:\n-download {file name}\n-help\n-update\n-run {file name}\n-downloads\n\nExample:\npython3 main.py -download password -update -help -run password -downloads\n\nFiles:\npassword - password mananger with a gui")
 	if "-run" in sys.argv:
 		print("Running")
 		indexRun = sys.argv.index("-run")
@@ -125,6 +126,16 @@ try:
 			print(errorText)
 			print(e)
 			print("Invalid arguments\nExample python3 main.py -run\nIn this case the file to run is missing")
+	if "-downloads" in sys.argv:
+		try:
+			path = r'Scripts/*.py'
+			files = glob.glob(path)
+			files = str(files)
+			files = files.replace("Scripts/", "").replace("'", "").replace("[", "").replace("]", "")
+			print(files)
+		except Exception as e:
+			print(errorText)
+			print(e)
 
 except:
 	import subprocess
@@ -139,6 +150,8 @@ except:
 	'requests'])
 	subprocess.check_call([sys.executable, '-m', 'pip', 'install',
 	'aiohttp'])
+	subprocess.check_call([sys.executable, '-m', 'pip', 'install',
+	'blob'])
 	
 	# process output with an API in the subprocess module:
 	reqs = subprocess.check_output([sys.executable, '-m', 'pip',
