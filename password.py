@@ -1,112 +1,129 @@
-from colorama import *
-import requests
-import profile as profile
-import platform
-import os
-import time
-import sys
+from math import *
+from tkinter import *
+import random
+from itertools import repeat
+import string
 
-def convertTuple(tup):
-		        # initialize an empty string
-		    str = ''
-		    for item in tup:
-		        str = str + item
-		    return str
+root = Tk()
+root.title("Lucidblu Password Master")
 
-def request():
-    r = requests.get(url, stream=True)
-    with open(output, 'wb') as f:
-        for chunk in r.iter_content():
-            f.write(chunk)
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.columnconfigure(2, weight=1)
 
-folderName = "xnsl649dwttbhc2"
-errorText = Fore.RED
-normalText = Fore.BLUE
-sysText = Fore.GREEN
-downloadText = Fore.YELLOW
-normalText = Fore.WHITE
+root.configure(bg="black")
 
-match platform.system():
-	case "Windows":
-		os.system("cls")
-	case "Linux":
-		os.system("clear")
+warning = Label(root, text="Work in progress\nMore apps available at lucidblu.rf.gd\nMade by lucidblu\n")
+warning.grid(column=1, row=0)
 
-print(sysText)
-print()
-print(platform.platform())
-print()
-print(platform.system())
-print()
-print(os.name)
-os.system("ls")
-print()
-os.system("mkdir Scripts")
-print()
-print(os.getcwd())
-print()
-print(len(sys.argv))
-print()
-os.system("ls")
+app_label = Label(root, text="App / Website:")
+app_label.grid(column=0, row=1)
+app_label_field = Entry()
+app_label_field.grid(column=1, row=1)
 
-time.sleep(1)
+username_label = Label(root, text="Username:")
+username_label.grid(column=0, row=2)
+username_label_field = Entry()
+username_label_field.grid(column=1, row=2)
 
-if "-download" in sys.argv:
-	print("Download")
-	indexDownload = sys.argv.index("-download")
-	try:
-		fileToDownload = sys.argv[indexDownload + 1]
-		print(downloadText)
-		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
-		url = convertTuple(url)
-		tuple = "Scripts/", url[56:len(url)]
-		str = convertTuple(tuple)
-		print(len(url) - 13)
-		print()
-		print(str)
-		print("Downloading", url[56:len(url)])
-		output = str
-		profile.run('request()')
-		pass
-	except:
-		print(errorText)
-		print("Invalid arguments\nExample python3 downloader.py -download\nIn this case the file to download is missing")
-if "-update" in sys.argv:
-	print("Update")
-	try:
-		fileToDownload = "downloader"
-		print(downloadText)
-		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
-		url = convertTuple(url)
-		tuple = "", url[56:len(url)]
-		str = convertTuple(tuple)
-		print(len(url) - 13)
-		print(str)
-		print("Updating", url[56:len(url) - 5])
-		output = str
-		profile.run('request()')
-		pass
-	except:
-		print(errorText)
-		print("An error occured")
-if "-testupdate" in sys.argv:
-	print("Update")
-	try:
-		fileToDownload = "downloader"
-		print(downloadText)
-		url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
-		url = convertTuple(url)
-		tuple = "test_", url[56:len(url)]
-		str = convertTuple(tuple)
-		print(len(url) - 13)
-		print(str)
-		print("Updating", url[56:len(url) - 5])
-		output = str
-		profile.run('request()')
-		pass
-	except:
-		print(errorText)
-		print("An error occured")
-if "-help" in sys.argv:
-	print(downloadText)
-	print("Help:\n-download {file name}\n-help\n-update\n\nExample:\npython3 downloader.py -download password -update -help\n\nFiles:\npassword - password mananger with a gui")
+password_label = Label(root, text="Password:")
+password_label.grid(column=0, row=3)
+password_label_field = Entry()
+password_label_field.grid(column=1, row=3)
+
+def quit():
+    print(app_label_field.get())
+    print(username_label_field.get())
+    print(password_label_field.get())
+    root.quit()
+def write_to_file():
+    password = password_label_field.get()
+    password = str.encode(password)
+    password2 = str(password)
+    password2 = password2.replace('b', '')
+    passwords = open("passwords.txt", "a")
+    passwords.write(str(app_label_field.get()))
+    passwords.write(" ")
+    passwords.write(str(username_label_field.get()))
+    passwords.write(" ")
+    passwords.write(str(password2))
+    passwords.write("109232")
+    passwords.close()
+def read_file():
+    check = open("passwords.txt", "r")
+    check = check.read()
+    if check == "":
+        print("No saved passwords")
+    else:
+        with open("passwords.txt") as f:
+            contents = str(f.readlines())
+            contents = contents.replace(',', '')
+            contents = contents.replace("'", '')
+            contents = contents.replace('[', '')
+            contents = contents.replace(']', '')
+            contents = contents.replace('"', '')
+            contents = contents.replace('109232', '\n')
+            print(contents)
+    top = Toplevel(root)
+    top.geometry("800x300")
+    top.title("Generated Password")
+    listPasswords = Label(top, text=contents)
+    listPasswords.grid(column=0, row=0)
+    quitPopup = Button(top, text="Quit", command=quitPopup)
+    quitPopup.grid(column=0, row=1)
+def generatePasswordPopup():
+    def quitPopup():
+        root.quit()
+    def insertGeneratedPassword():
+        password_label_field.delete(0, "end")
+        password_label_field.insert(0, endPassList)
+    top = Toplevel(root)
+    complexityInput = popup_Label_field.get()
+    passNumberList = []
+    passLetterList = []
+    endPassList = []
+    for i in range(int(complexityInput)):
+        passGenNumber = random.randrange(9)
+        passGenLetter = random.choice(string.ascii_letters)
+        passNumberList.append(passGenNumber)
+        passLetterList.append(passGenLetter)
+        endPassList.append(random.choice(str(passGenNumber) + passGenLetter))
+    endPassList = str(endPassList)
+    endPassList = endPassList.replace(',', '')
+    endPassList = endPassList.replace("'", '')
+    endPassList = endPassList.replace('[', '')
+    endPassList = endPassList.replace(']', '')
+    endPassList = endPassList.replace('"', '')
+    endPassList = endPassList.replace(' ', '')
+     # top.geometry("750x250")
+    screen_width = top.winfo_screenwidth()
+    screen_width = screen_width / 15
+    screen_height = top.winfo_screenheight()
+    screen_height = screen_height / 10
+    top.title("Generated Password")
+    generatedPasswordLabel = Label(top, text=endPassList)
+    generatedPasswordLabel.grid(column=0, row=0)
+    quitPopup = Button(top, text="Quit", command=quitPopup)
+    quitPopup.grid(column=0, row=1)
+    insertPassword = Button(top, text="Set as password", command=insertGeneratedPassword)
+    insertPassword.grid(column=1, row=1)
+
+submit_button = Button(root, text="Quit", command=quit)
+submit_button.grid(column=0, row=21)
+write_button = Button(root, text="Write to files", command=write_to_file)
+write_button.grid(column=1, row=21)
+read_button = Button(root, text="Read saved passwords", command=read_file)
+read_button.grid(column=2, row=21)
+
+warning.configure(fg="white", bg="black")
+app_label.configure(fg="white", bg="black")
+app_label_field.configure(fg="white", bg="black")
+username_label.configure(fg="white", bg="black")
+username_label_field.configure(fg="white", bg="black")
+password_label.configure(fg="white", bg="black")
+password_label_field.configure(fg="white", bg="black")
+submit_button.configure(fg="white", bg="black")
+write_button.configure(fg="white", bg="black")
+read_button.configure(fg="white", bg="black")
+
+root.mainloop()
