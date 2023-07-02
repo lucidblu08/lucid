@@ -54,7 +54,7 @@ try:
 	time.sleep(1)
 
 	if "-download" in sys.argv:
-		print("Download")
+		print("Downloading")
 		indexDownload = sys.argv.index("-download")
 		try:
 			fileToDownload = sys.argv[indexDownload + 1]
@@ -72,11 +72,11 @@ try:
 			pass
 		except:
 			print(errorText)
-			print("Invalid arguments\nExample python3 downloader.py -download\nIn this case the file to download is missing")
+			print("Invalid arguments\nExample python3 main.py -download\nIn this case the file to download is missing")
 	if "-update" in sys.argv:
 		print("Update")
 		try:
-			fileToDownload = "downloader"
+			fileToDownload = "main"
 			print(downloadText)
 			url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
 			url = convertTuple(url)
@@ -94,7 +94,7 @@ try:
 	if "-testupdate" in sys.argv:
 		print("Update")
 		try:
-			fileToDownload = "downloader"
+			fileToDownload = "main"
 			print(downloadText)
 			url = "https://raw.githubusercontent.com/lucidblu08/lucid/main/", fileToDownload, ".py"
 			url = convertTuple(url)
@@ -111,7 +111,21 @@ try:
 			print("An error occured")
 	if "-help" in sys.argv:
 		print(downloadText)
-		print("Help:\n-download {file name}\n-help\n-update\n\nExample:\npython3 downloader.py -download password -update -help\n\nFiles:\npassword - password mananger with a gui")
+		print("Help:\n-download {file name}\n-help\n-update\n-run\n\nExample:\npython3 main.py -download password -update -help -run password\n\nFiles:\npassword - password mananger with a gui")
+	if "-run" in sys.argv:
+		print("Running")
+		indexRun = sys.argv.index("-run")
+		try:
+			sys.path.insert(1, 'Scripts')
+			fileToRun = sys.argv[indexRun + 1]
+			print(sysText)
+			__import__(fileToRun)
+			pass
+		except Exception as e:
+			print(errorText)
+			print(e)
+			print("Invalid arguments\nExample python3 main.py -run\nIn this case the file to run is missing")
+
 except:
 	import subprocess
 	import sys
